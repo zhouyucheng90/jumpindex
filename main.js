@@ -113,7 +113,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "97ec7db9eff1e8a34470";
+/******/ 	var hotCurrentHash = "54e8743020a2eb6e84b5";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -965,23 +965,29 @@ function init() {
         var restartBtn = document.querySelector('.restart-btn');
         var scoreEl = document.querySelector('.score');
         var login = document.querySelector('.login');
+        var navMenu = document.querySelector('.navMenu');
+        var blindBox = document.querySelector('.blindBox');
 
         startpage.style.display = 'flex';
         restartpage.style.display = 'none';
 
         startBtn.addEventListener('click', function () {
             startpage.style.display = 'none';
+            navMenu.style.display = 'none';
             game.start();
         });
 
         restartBtn.addEventListener('click', function () {
             restartpage.style.display = 'none';
+            navMenu.style.display = 'none';
             game.restart();
         });
 
         //游戏失败回调函数
         game.failCallback = function (score) {
             restartpage.style.display = 'flex';
+            blindBox.style.display = 'none';
+            navMenu.style.display = 'block';
             scoreEl.innerHTML = score;
         };
 
@@ -1016,7 +1022,7 @@ function Game() {
     this.group = new THREE.Group();
     this.scene.add(this.group);
 
-    this.camera = new THREE.OrthographicCamera(window.innerWidth / -60, window.innerWidth / 60, window.innerHeight / 60, window.innerHeight / -60, 0.1, 5000);
+    this.camera = new THREE.OrthographicCamera(window.innerWidth / -40, window.innerWidth / 40, window.innerHeight / 40, window.innerHeight / -40, 0.1, 5000);
     this.camera.position.set(100, 100, 100);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
     this.cameraPos = {
@@ -1077,8 +1083,8 @@ function Game() {
         // 设置缓存数组最大缓存多少个图形
         cubeMaxLen: 6,
         // 立方体内边缘之间的最小距离和最大距离
-        cubeMinDis: 2,
-        cubeMaxDis: 5,
+        cubeMinDis: 1,
+        cubeMaxDis: 8,
 
         // 模型Config
         modelConfig: new ModelConfig()
@@ -1537,6 +1543,9 @@ Object.assign(Game.prototype, {
     _updateScore: function _updateScore(digit) {
         // 显示toast
         var t = document.querySelector('.MyToast');
+        var blindBox = document.querySelector('.blindBox');
+        var goblindbox = document.querySelector('.goblindbox');
+
         t.innerHTML = '+' + digit;
         t.classList.remove('disappear');
         setTimeout(function () {
@@ -1544,6 +1553,18 @@ Object.assign(Game.prototype, {
         }, 250);
         // 提高分数
         this.score += digit;
+        if (this.score > 0) {
+            blindBox.style.display = 'block';
+            if (this.score <= 10) {
+                goblindbox.innerHTML = '1级盲盒';
+            }
+            if (this.score > 10 && this.score <= 20) {
+                goblindbox.innerHTML = '2级盲盒';
+            }
+            if (this.score > 20) {
+                goblindbox.innerHTML = '3级盲盒';
+            }
+        }
         console.log(this.score);
         document.getElementById('score').innerHTML = this.score;
     },

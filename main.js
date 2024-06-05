@@ -113,7 +113,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "f19ca386e3caf3c77479";
+/******/ 	var hotCurrentHash = "6c2cfbb0d59ef062ead0";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -953,9 +953,68 @@ var _index = __webpack_require__(11);
 "use strict";
 
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 var Game = __webpack_require__(12);
 
 function init() {
+    var sendMessage = function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ChatId, wallet, screenName) {
+            var token, message, url, options, response, data;
+            return regeneratorRuntime.wrap(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            token = '6951172037:AAEkB64F9pvyja0mbUtyxCMUgyv8YNYXRJ4';
+                            message = '123';
+                            url = 'https://api.telegram.org/bot' + token + '/sendMessage';
+                            options = {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ chat_id: ChatId, text: message, parse_mode: 'HTML',
+                                    reply_markup: {
+                                        inline_keyboard: [[{
+                                            text: '🎊开始抽奖',
+                                            switch_inline_query: "Enter your custom share message here"
+                                        }]]
+                                    }
+                                })
+                            };
+                            _context.prev = 4;
+                            _context.next = 7;
+                            return fetch(url, options);
+
+                        case 7:
+                            response = _context.sent;
+                            _context.next = 10;
+                            return response.json();
+
+                        case 10:
+                            data = _context.sent;
+
+                            console.log(data);
+                            _context.next = 17;
+                            break;
+
+                        case 14:
+                            _context.prev = 14;
+                            _context.t0 = _context['catch'](4);
+
+                            console.error(_context.t0);
+
+                        case 17:
+                        case 'end':
+                            return _context.stop();
+                    }
+                }
+            }, _callee, this, [[4, 14]]);
+        }));
+
+        return function sendMessage(_x, _x2, _x3) {
+            return _ref.apply(this, arguments);
+        };
+    }();
+
     window.onload = function () {
         var game = new Game();
 
@@ -967,19 +1026,22 @@ function init() {
         var login = document.querySelector('.login');
         var navMenu = document.querySelector('.navMenu');
         var blindBox = document.querySelector('.blindBox');
+        var goGame = document.querySelector('.goGame');
 
         startpage.style.display = 'flex';
         restartpage.style.display = 'none';
 
         startBtn.addEventListener('click', function () {
             startpage.style.display = 'none';
-            navMenu.style.display = 'none';
+            // navMenu.style.display = 'none';
+            navMenu.classList.remove('showNavMenu');
             game.start();
         });
 
         restartBtn.addEventListener('click', function () {
             restartpage.style.display = 'none';
-            navMenu.style.display = 'none';
+            // navMenu.style.display = 'none';
+            navMenu.classList.remove('showNavMenu');
             game.restart();
         });
 
@@ -987,13 +1049,25 @@ function init() {
         game.failCallback = function (score) {
             restartpage.style.display = 'flex';
             blindBox.style.display = 'none';
-            navMenu.style.display = 'block';
             scoreEl.innerHTML = score;
         };
 
         //登录
         login.addEventListener('click', function () {
             console.log('login');
+            var intentUrl = 'https://telegram.me/share/url?url=' + encodeURIComponent('https://zhouyucheng90.github.io/jumpindex/index.html?user_id=5612649869');
+            window.open(intentUrl, "_blank");
+        });
+
+        navMenu.addEventListener('click', function () {
+            navMenu.classList.add('showNavMenu');
+        });
+
+        goGame.addEventListener('click', function () {
+            console.log(11111111);
+            // sendMessage(5612649869, '0x12345678901234567890', 'test')
+            var intentUrl = 'https://telegram.me/share/url?url=' + encodeURIComponent('https://zhouyucheng90.github.io/jumpindex/index.html?user_id=5612649869');
+            window.location.href = intentUrl;
         });
     };
 }
@@ -1433,6 +1507,8 @@ Object.assign(Game.prototype, {
 
     _onMouseDown: function _onMouseDown() {
         // console.log(this.speed, this.accelerate)
+        var navMenu = document.querySelector('.navMenu');
+        navMenu.classList.remove('showNavMenu');
         this.mouseState = -1;
         if (this.jumper.scale.y > 0.2) {
             //控制一个域值

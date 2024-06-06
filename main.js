@@ -113,7 +113,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "3bf77b94d4cc8a318e81";
+/******/ 	var hotCurrentHash = "ae9224c044fe2657c377";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -968,6 +968,8 @@ function init() {
         var navMenu = document.querySelector('.navMenu');
         var blindBox = document.querySelector('.blindBox');
         var goGame = document.querySelector('.goGame');
+        var quest = document.querySelector('.quest');
+        var ranking = document.querySelector('.ranking');
 
         startpage.style.display = 'flex';
         restartpage.style.display = 'none';
@@ -993,13 +995,6 @@ function init() {
             scoreEl.innerHTML = score;
         };
 
-        //登录
-        login.addEventListener('click', function () {
-            console.log('login');
-            var intentUrl = 'https://telegram.me/share/url?url=' + encodeURIComponent('https://zhouyucheng90.github.io/jumpindex/index.html?user_id=5612649869');
-            window.open(intentUrl, "_blank");
-        });
-
         navMenu.addEventListener('click', function () {
             navMenu.classList.add('showNavMenu');
         });
@@ -1007,7 +1002,28 @@ function init() {
         goGame.addEventListener('click', function () {
             console.log(11111111);
             // sendMessage(5612649869, '0x12345678901234567890', 'test')
-            var intentUrl = 'https://telegram.me/share/url?url=' + encodeURIComponent('https://zhouyucheng90.github.io/jumpindex/index.html?user_id=5612649869');
+            var intentUrl = 'https://t.me/GameChengBot';
+            window.location.href = intentUrl;
+        });
+
+        //登录
+        login.addEventListener('click', function () {
+            // console.log('login')
+            console.log(222);
+            var intentUrl = 'https://t.me/Catizen_Mntbot/gameapp';
+            window.open(intentUrl, "_blank");
+        });
+
+        quest.addEventListener('click', function () {
+            console.log(33);
+            var intentUrl = 'https://t.me/Catizen_Mntbot/gameapp?startapp=rp_13388393\uD83D\uDCB0Catizen: Unleash, Play, Earn - Where Every Game Leads to an Airdrop Adventure!\uD83C\uDF81Let\'s play-to-earn airdrop right now!';
+            window.location.href = intentUrl;
+        });
+
+        ranking.addEventListener('click', function () {
+            console.log(44);
+            // sendMessage(5612649869, '0x12345678901234567890', 'test')
+            var intentUrl = 'https://t.me/GameChengBot/gameapp?startapp=rp_13388393';
             window.location.href = intentUrl;
         });
     };

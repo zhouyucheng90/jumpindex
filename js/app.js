@@ -1437,7 +1437,7 @@ eval("module.exports = /*#__PURE__*/JSON.parse('[{\"inputs\":[],\"stateMutabilit
 /******/ 	
 /******/ 	/* webpack/runtime/publicPath */
 /******/ 	!function() {
-/******/ 		__webpack_require__.p = "/";
+/******/ 		__webpack_require__.p = "/jumpindex/";
 /******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/jsonp chunk loading */
